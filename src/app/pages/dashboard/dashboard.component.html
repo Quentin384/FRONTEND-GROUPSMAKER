@@ -1,1 +1,20 @@
-<p>dashboard works!</p>
+<div *ngFor="let liste of listes" class="liste">
+  <h2>{{ liste.nom }} ({{ liste.personnes.length }} personnes, {{ liste.tirages }} tirages)</h2>
+  <button (click)="formerGroupes(liste.nom)">Former des groupes</button>
+  <ul>
+    <li *ngFor="let personne of liste.personnes">
+      👤 {{ personne.nom }}
+    </li>
+  </ul>
+
+  <!-- Affichage optionnel des groupes formés -->
+  <div *ngIf="groupesFormes[ liste.nom ]">
+    <h3>Groupes formés :</h3>
+    <div *ngFor="let groupe of groupesFormes[liste.nom]; let i = index">
+      <strong>Groupe {{ i + 1 }}</strong>
+      <ul>
+        <li *ngFor="let p of groupe">{{ p.nom }}</li>
+      </ul>
+    </div>
+  </div>
+</div>
