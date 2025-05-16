@@ -1,0 +1,78 @@
+.dashboard {
+  padding: 2rem;
+
+  .liste {
+    border: 1px solid #ddd;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    background: #f9f9f9;
+
+    h2 {
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+      color: #333;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 1rem;
+
+      li {
+        margin: 0.25rem 0;
+      }
+    }
+
+    .config {
+      margin: 1rem 0;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+
+        input {
+          margin-left: 0.5rem;
+          padding: 0.3rem 0.5rem;
+          border-radius: 4px;
+          border: 1px solid #ccc;
+        }
+      }
+
+      fieldset {
+        margin-top: 1rem;
+        padding: 1rem;
+        border: 1px solid #aaa;
+        border-radius: 6px;
+
+        legend {
+          font-weight: bold;
+        }
+
+        label {
+          display: block;
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+
+    button {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+
+    .valide {
+      color: green;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+  }
+}

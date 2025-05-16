@@ -1,49 +1,24 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GroupesService } from '../../core/services/groupes.service';
+import { GroupesService, Groupe } from '../../core/services/groupes.service';
 import { Liste } from '../../models/liste.model';
 import { Personne } from '../../models/personne.model';
 import { FormListeComponent } from './form-liste.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormListeComponent],
-  template: `
-    <div class="dashboard">
-      <h1>Vos listes</h1>
-
-      <app-form-liste (nouvelleListe)="ajouterListe($event)"></app-form-liste>
-
-      <div *ngFor="let liste of listes" class="liste">
-        <h2>
-          {{ liste.nom }} ({{ liste.personnes.length }} personnes, {{ liste.tirages }} tirages)
-        </h2>
-
-        <button (click)="formerGroupes(liste.nom)">Former des groupes</button>
-
-        <ul>
-          <li *ngFor="let personne of liste.personnes">
-            👤 {{ personne.nom }}
-          </li>
-        </ul>
-
-        <div *ngIf="groupesFormes[liste.nom]?.length">
-          <h3>Groupes formés :</h3>
-          <div *ngFor="let groupe of groupesFormes[liste.nom]; let i = index" style="margin-bottom:1rem;">
-            <strong>Groupe {{ i + 1 }}</strong>
-            <ul>
-              <li *ngFor="let p of groupe">{{ p.nom }}</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  `
+  imports: [CommonModule, FormsModule, FormListeComponent],
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
   listes: Liste[] = [];
-  groupesFormes: { [nomListe: string]: Personne[][] } = {};
+  groupesFormes: { [nomListe: string]: Groupe[] } = {};
+  nombreGroupes: { [nomListe: string]: number } = {};
+  nomsGroupes: { [nomListe: string]: string[] } = {};
+  criteresMixite: { [nomListe: string]: { anciensDWWM: boolean; mixAge: boolean } } = {};
 
   constructor(private groupesService: GroupesService) {
     this.listes = this.groupesService.getListes();
@@ -57,8 +32,37 @@ export class DashboardComponent {
     this.listes = this.groupesService.getListes();
   }
 
+  iter(n: number): number[] {
+    return Array(n);
+  }
+
+  initNomsGroupes(nomListe: string): void {
+    const nb = this.nombreGroupes[nomListe] || 1;
+    this.nomsGroupes[nomListe] = Array(nb).fill('').map((_, i) => `Groupe ${i + 1}`);
+    if (!this.criteresMixite[nomListe]) {
+      this.criteresMixite[nomListe] = { anciensDWWM: false, mixAge: false };
+    }
+  }
+
   formerGroupes(nomListe: string): void {
-    const tailleGroupe = 3; 
-    this.groupesFormes[nomListe] = this.groupesService.formerGroupesAleatoires(nomListe, tailleGroupe);
+    const nbGroupes = this.nombreGroupes[nomListe];
+    const noms = this.nomsGroupes[nomListe];
+    if (!nbGroupes || !noms || noms.length !== nbGroupes) return;
+
+    const criteres = [];
+    if (this.criteresMixite[nomListe]?.anciensDWWM) criteres.push('anciensDWWM');
+    if (this.criteresMixite[nomListe]?.mixAge) criteres.push('mixAge');
+
+    const groupes = this.groupesService.formerGroupesAleatoires(nomListe, nbGroupes, noms, criteres);
+    this.groupesFormes[nomListe] = groupes;
+  }
+
+  validerTirage(nomListe: string): void {
+    this.groupesService.validerTirage(nomListe);
+  }
+
+  estTirageValide(nomListe: string): boolean {
+    const tirage = this.groupesService.getDernierTirage(nomListe);
+    return tirage?.valide ?? false;
   }
 }

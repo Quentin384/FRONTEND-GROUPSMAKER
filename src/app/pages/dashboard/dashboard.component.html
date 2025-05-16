@@ -1,20 +1,62 @@
-<div *ngFor="let liste of listes" class="liste">
-  <h2>{{ liste.nom }} ({{ liste.personnes.length }} personnes, {{ liste.tirages }} tirages)</h2>
-  <button (click)="formerGroupes(liste.nom)">Former des groupes</button>
-  <ul>
-    <li *ngFor="let personne of liste.personnes">
-      👤 {{ personne.nom }}
-    </li>
-  </ul>
+<div class="dashboard">
+  <h1>Vos listes</h1>
 
-  <!-- Affichage optionnel des groupes formés -->
-  <div *ngIf="groupesFormes[ liste.nom ]">
-    <h3>Groupes formés :</h3>
-    <div *ngFor="let groupe of groupesFormes[liste.nom]; let i = index">
-      <strong>Groupe {{ i + 1 }}</strong>
-      <ul>
-        <li *ngFor="let p of groupe">{{ p.nom }}</li>
-      </ul>
+  <app-form-liste (nouvelleListe)="ajouterListe($event)"></app-form-liste>
+
+  <div *ngFor="let liste of listes" class="liste">
+    <h2>{{ liste.nom }} ({{ liste.personnes.length }} personnes, {{ liste.tirages }} tirages)</h2>
+
+    <!-- Config groupe -->
+    <div *ngIf="!estTirageValide(liste.nom)" class="config">
+      <label>
+        Nombre de groupes :
+        <input type="number" min="1" [value]="nombreGroupes[liste.nom] || 1"
+               (input)="nombreGroupes[liste.nom] = $any($event.target).valueAsNumber" />
+      </label>
+
+      <button (click)="initNomsGroupes(liste.nom)">Définir les noms</button>
+
+      <div *ngIf="nomsGroupes[liste.nom]?.length">
+        <div *ngFor="let _ of iter(nombreGroupes[liste.nom]); let i = index">
+          <label>
+            Nom groupe {{ i + 1 }} :
+            <input type="text" [(ngModel)]="nomsGroupes[liste.nom][i]" />
+          </label>
+        </div>
+      </div>
+
+      <fieldset>
+        <legend>Critères de mixité</legend>
+        <label>
+          <input type="checkbox" [(ngModel)]="criteresMixite[liste.nom].anciensDWWM" />
+          Mixer anciens DWWM
+        </label>
+        <label>
+          <input type="checkbox" [(ngModel)]="criteresMixite[liste.nom].mixAge" />
+          Mixer âges
+        </label>
+      </fieldset>
+
+      <button (click)="formerGroupes(liste.nom)">Former les groupes</button>
+    </div>
+
+    <!-- Liste des personnes -->
+    <ul>
+      <li *ngFor="let personne of liste.personnes">👤 {{ personne.nom }}</li>
+    </ul>
+
+    <!-- Affichage des groupes formés -->
+    <div *ngIf="groupesFormes[liste.nom]?.length">
+      <h3>Groupes formés :</h3>
+      <div *ngFor="let groupe of groupesFormes[liste.nom]">
+        <strong>{{ groupe.nom }}</strong>
+        <ul>
+          <li *ngFor="let p of groupe.membres">{{ p.nom }}</li>
+        </ul>
+      </div>
+
+      <button *ngIf="!estTirageValide(liste.nom)" (click)="validerTirage(liste.nom)">Valider le tirage</button>
+      <p *ngIf="estTirageValide(liste.nom)" class="valide">Tirage validé, plus aucune modification possible.</p>
     </div>
   </div>
 </div>
