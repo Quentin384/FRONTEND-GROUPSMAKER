@@ -97,26 +97,22 @@ L’interface est conçue en **mobile-first** : elle s’adapte automatiquement 
 
 ---
 
-✅ Évaluation et livrables
+## ✅ Évaluation et livrables
 
-🎯 Maquette respectée et responsive
-
-🧱 Intégration fidèle et architecture claire
-
-🌐 Site déployé et accessible publiquement
-
-🔧 Dépôt GitHub complet avec tickets, branches, documentation
-
-🎤 Présentation orale avec démonstration live
-
-✔️ Fonctionnalités complètes conformément au cahier des charges
+- 🎯 Maquette respectée et responsive
+- 🧱 Intégration fidèle et architecture claire
+- 🌐 Site déployé et accessible publiquement
+- 🔧 Dépôt GitHub complet avec tickets, branches, documentation
+- 🎤 Présentation orale avec démonstration live
+- ✔️ Fonctionnalités complètes conformément au cahier des charges
 
 ---
 
-📌 Auteur
+## 📌 Auteur
 
-👨‍💻 Quentin – Étudiant développeur Fullstack Java / JS
-🎓 Projet réalisé dans le cadre de la formation Simplon
-📆 Projet en solo – Mai 2025
+👨‍💻 Quentin – Étudiant développeur Fullstack Java / JS  
+🎓 Projet réalisé dans le cadre de la formation Simplon  
+📆 Projet en solo – Mai 2025  
 🎯 Rôle principal : logique métier (génération de groupes, critères), POO, intégration responsive avec Angular 19
+
 
