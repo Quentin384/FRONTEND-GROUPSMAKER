@@ -58,8 +58,8 @@ L’interface est conçue en **mobile-first** : elle s’adapte automatiquement 
 
 ### 🧑‍🤝‍🧑 Organisation
 
-- Travail en **équipe de 3 à 4 personnes**
-- 9 demi-journées de développement entre le **28 avril et le 20 mai**
+- Travail en **équipe de 3 à 4 personnes**, ou en autonomie
+- 8 demi-journées de développement entre le **15 et le 20 mai**
 - Suivi agile avec tickets, prototypage, et gestion structurée (Git flow)
 
 ---
