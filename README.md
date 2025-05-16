@@ -1,138 +1,122 @@
-🎯 Application de Création de Groupes Simplon
+# 🎯 Application de Création de Groupes Simplon
 
-🚀 Présentation du projet
+Bienvenue dans ce projet de création dynamique de groupes d’apprenants Simplon, développé dans le cadre de ma formation en développement Fullstack.  
+Cette application vise à constituer des groupes équilibrés selon des critères personnalisés, tout en assurant une bonne expérience utilisateur sur tous les supports.
 
-Cette application web permet de créer des groupes d'apprenants Simplon de manière dynamique et intelligente, évitant la répétition des mêmes groupes tout en respectant des critères de mixité (âge, ancienneté, profil, etc.).
-
-Pensée mobile first, l’interface s’adapte à tous types d’écrans (mobile, tablette, desktop) pour une expérience fluide.
-
----
-
-⚙️ Fonctionnalités principales
-
-Page vitrine avec présentation des fonctionnalités
-
-Connexion simulée en JavaScript via fichier JSON (version démo, pas d’inscription)
-
-Gestion des listes de personnes : création, modification, suppression
-
-Gestion détaillée des personnes avec champs spécifiques (nom, genre, âge, profil, niveaux)
-
-Création aléatoire de groupes respectant les critères choisis et l’historique des tirages
-
-Modification manuelle des groupes par glisser-déposer
-
-Validation finale bloquant toute modification ou suppression du tirage
-
-Gestion du compte utilisateur (modification, suppression)
-
-Invitation périodique à ré-accepter les conditions générales
+🔗 [Voir la démo (si disponible)](https://...)  
+📁 [Voir le dépôt GitHub](https://github.com/Quentin384/Groupes-Listes)
 
 ---
 
-📱 Responsive & Adaptatif
+## 🚀 Présentation
 
-L’application est conçue pour être utilisable sur mobile, tablette et ordinateur. La navigation et la disposition des informations s’adaptent selon le support pour garantir l’accessibilité.
+Cette application web permet de créer intelligemment des groupes d’apprenants tout en évitant la répétition des compositions précédentes.  
+Elle prend en compte plusieurs critères tels que :
 
----
+- Âge
+- Ancienneté
+- Genre
+- Profil
+- Niveau
 
-📚 Contexte pédagogique et objectifs
-
-🎯 Objectifs en tant que CDA
-Compléter une maquette responsive (mobile, tablette, desktop) conforme au cahier des charges
-
-Développer l’application en respectant les bonnes pratiques de sécurité, maintenabilité, architecture et nommage
-
-Tester le front-end avec des tests unitaires automatisés (Vitest/Jest)
-
-Documenter le code et produire une documentation générale
-
-Travailler en équipe avec Git, gestion de tickets, branches, et déploiement continu
-
-Publier le site sur un serveur de production accessible
+Pensée **mobile-first**, elle s’adapte aux smartphones, tablettes et ordinateurs pour une utilisation fluide dans un contexte pédagogique.
 
 ---
 
-🛠 Modalités
+## ⚙️ Fonctionnalités principales
 
-Travail en groupes de 3 à 4 personnes
-
-9 demi-journées du 28 avril au 20 mai
-
-Gestion agile avec tickets et gitflow structuré
-
-Prototypage obligatoire avant intégration
-
----
-
-📋 Étapes clés
-
-Maquettage responsive (mobile/tablette/desktop)
-
-Intégration HTML/CSS fidèle à la maquette, architecture propre, TypeScript et POO
-
-Tests unitaires front-end avec Vitest/Jest
-
-Composants métiers : génération de groupes, critères de mixité, drag & drop
-
-Documentation, gestion d’équipe, déploiement continu via GitLab Pages
+- ✅ Page vitrine avec présentation de l’application
+- ✅ Connexion simulée (via JSON, pas d’inscription réelle)
+- ✅ Gestion des utilisateurs : ajout, modification, suppression
+- ✅ Fiches apprenants avec champs personnalisés
+- ✅ Génération aléatoire de groupes équilibrés selon critères définis
+- ✅ Historique des tirages pour éviter les doublons
+- ✅ Modification manuelle des groupes via drag & drop
+- ✅ Validation finale qui verrouille les groupes
+- ✅ Gestion du compte utilisateur (modification, suppression)
+- ✅ Rappel périodique des conditions générales à valider
 
 ---
 
-🛠 Technologies utilisées
+## 📱 Responsive Design
 
-HTML5, CSS3 (mobile first)
-
-JavaScript / TypeScript (POO)
-
-JSON pour données simulées
-
-Outils de test : Vitest / Jest
-
-Git/GitLab pour versionnage et déploiement
+L’interface est conçue en **mobile-first** : elle s’adapte automatiquement aux différentes tailles d’écran (smartphone, tablette, desktop), assurant accessibilité et lisibilité à tout moment.
 
 ---
 
-🔐 Sécurité & Limitations
+## 📚 Contexte pédagogique
 
-Connexion simulée uniquement en front-end (JSON local)
+### 🎯 Objectifs pédagogiques
 
-Pas de backend dans cette version
+- Répondre à un **cahier des charges précis**
+- Produire une **maquette responsive** conforme à la charte graphique
+- Appliquer les bonnes pratiques de **sécurité**, **maintenabilité**, et **architecture**
+- Implémenter des **tests unitaires front-end** (Vitest / Jest)
+- Utiliser **GitHub** en mode projet : gestion de tickets, branches, déploiement
+- Documenter le projet (code et usage)
+- Déployer sur un **serveur de production public**
 
-Données non persistantes en local
+### 🧑‍🤝‍🧑 Organisation
 
----
-
-📂 Structure du projet
-
-bash
-Copier
-Modifier
-/src
-  /css
-  /js
-  /json (données simulées)
-/index.html (page vitrine)
-/login.html (connexion simulée)
-...
+- Travail en **équipe de 3 à 4 personnes**
+- 9 demi-journées de développement entre le **28 avril et le 20 mai**
+- Suivi agile avec tickets, prototypage, et gestion structurée (Git flow)
 
 ---
 
-✅ Critères d’évaluation
+## 🧩 Étapes clés du projet
 
-Maquette responsive complète et respectueuse de la charte graphique
-
-Intégration conforme à la maquette
-
-Site en production accessible via URL publique
-
-Dépôt Git complet avec gestion avancée des branches, tickets, documentation
-
-Présentation orale démontrant la maîtrise technique et le travail collaboratif
-
-Fonctionnalités complètes conformément au cahier des charges
+- ✅ Maquettage responsive (mobile / tablette / desktop)
+- ✅ Intégration HTML/CSS fidèle à la maquette
+- ✅ Architecture modulaire en **Angular 19 + TypeScript + POO**
+- ✅ Composants métiers :
+  - Génération de groupes
+  - Critères de mixité
+  - Drag & drop personnalisé
+- ✅ Tests unitaires avec **Vitest / Jest**
+- ✅ Documentation complète
+- ✅ Déploiement continu via **GitHub Pages**
 
 ---
 
-📝 Licence
-Projet réalisé dans le cadre de la formation Simplon. Usage pédagogique.
+## 🛠 Stack technique
+
+- HTML5 / CSS3 (Mobile-first)
+- Angular 19 + TypeScript (POO)
+- JSON (données simulées)
+- Vitest / Jest (tests unitaires)
+- Git / GitHub (versionnage et CI/CD)
+
+---
+
+## 🔐 Sécurité & Limitations
+
+- Connexion simulée (pas de backend réel)
+- Données non persistantes (local JSON uniquement)
+- Pas d’authentification réelle dans cette version
+
+---
+
+✅ Évaluation et livrables
+
+🎯 Maquette respectée et responsive
+
+🧱 Intégration fidèle et architecture claire
+
+🌐 Site déployé et accessible publiquement
+
+🔧 Dépôt GitHub complet avec tickets, branches, documentation
+
+🎤 Présentation orale avec démonstration live
+
+✔️ Fonctionnalités complètes conformément au cahier des charges
+
+---
+
+📌 Auteur
+
+👨‍💻 Quentin – Étudiant développeur Fullstack Java / JS
+🎓 Projet réalisé dans le cadre de la formation Simplon
+📆 Projet en solo – Mai 2025
+🎯 Rôle principal : logique métier (génération de groupes, critères), POO, intégration responsive avec Angular 19
+
