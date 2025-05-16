@@ -1,59 +1,138 @@
-# GenerateurGroupes
+🎯 Application de Création de Groupes Simplon
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.9.
+🚀 Présentation du projet
 
-## Development server
+Cette application web permet de créer des groupes d'apprenants Simplon de manière dynamique et intelligente, évitant la répétition des mêmes groupes tout en respectant des critères de mixité (âge, ancienneté, profil, etc.).
 
-To start a local development server, run:
+Pensée mobile first, l’interface s’adapte à tous types d’écrans (mobile, tablette, desktop) pour une expérience fluide.
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+⚙️ Fonctionnalités principales
 
-## Code scaffolding
+Page vitrine avec présentation des fonctionnalités
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Connexion simulée en JavaScript via fichier JSON (version démo, pas d’inscription)
 
-```bash
-ng generate component component-name
-```
+Gestion des listes de personnes : création, modification, suppression
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Gestion détaillée des personnes avec champs spécifiques (nom, genre, âge, profil, niveaux)
 
-```bash
-ng generate --help
-```
+Création aléatoire de groupes respectant les critères choisis et l’historique des tirages
 
-## Building
+Modification manuelle des groupes par glisser-déposer
 
-To build the project run:
+Validation finale bloquant toute modification ou suppression du tirage
 
-```bash
-ng build
-```
+Gestion du compte utilisateur (modification, suppression)
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Invitation périodique à ré-accepter les conditions générales
 
-## Running unit tests
+---
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+📱 Responsive & Adaptatif
 
-```bash
-ng test
-```
+L’application est conçue pour être utilisable sur mobile, tablette et ordinateur. La navigation et la disposition des informations s’adaptent selon le support pour garantir l’accessibilité.
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+📚 Contexte pédagogique et objectifs
 
-```bash
-ng e2e
-```
+🎯 Objectifs en tant que CDA
+Compléter une maquette responsive (mobile, tablette, desktop) conforme au cahier des charges
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Développer l’application en respectant les bonnes pratiques de sécurité, maintenabilité, architecture et nommage
 
-## Additional Resources
+Tester le front-end avec des tests unitaires automatisés (Vitest/Jest)
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Documenter le code et produire une documentation générale
+
+Travailler en équipe avec Git, gestion de tickets, branches, et déploiement continu
+
+Publier le site sur un serveur de production accessible
+
+---
+
+🛠 Modalités
+
+Travail en groupes de 3 à 4 personnes
+
+9 demi-journées du 28 avril au 20 mai
+
+Gestion agile avec tickets et gitflow structuré
+
+Prototypage obligatoire avant intégration
+
+---
+
+📋 Étapes clés
+
+Maquettage responsive (mobile/tablette/desktop)
+
+Intégration HTML/CSS fidèle à la maquette, architecture propre, TypeScript et POO
+
+Tests unitaires front-end avec Vitest/Jest
+
+Composants métiers : génération de groupes, critères de mixité, drag & drop
+
+Documentation, gestion d’équipe, déploiement continu via GitLab Pages
+
+---
+
+🛠 Technologies utilisées
+
+HTML5, CSS3 (mobile first)
+
+JavaScript / TypeScript (POO)
+
+JSON pour données simulées
+
+Outils de test : Vitest / Jest
+
+Git/GitLab pour versionnage et déploiement
+
+---
+
+🔐 Sécurité & Limitations
+
+Connexion simulée uniquement en front-end (JSON local)
+
+Pas de backend dans cette version
+
+Données non persistantes en local
+
+---
+
+📂 Structure du projet
+
+bash
+Copier
+Modifier
+/src
+  /css
+  /js
+  /json (données simulées)
+/index.html (page vitrine)
+/login.html (connexion simulée)
+...
+
+---
+
+✅ Critères d’évaluation
+
+Maquette responsive complète et respectueuse de la charte graphique
+
+Intégration conforme à la maquette
+
+Site en production accessible via URL publique
+
+Dépôt Git complet avec gestion avancée des branches, tickets, documentation
+
+Présentation orale démontrant la maîtrise technique et le travail collaboratif
+
+Fonctionnalités complètes conformément au cahier des charges
+
+---
+
+📝 Licence
+Projet réalisé dans le cadre de la formation Simplon. Usage pédagogique.

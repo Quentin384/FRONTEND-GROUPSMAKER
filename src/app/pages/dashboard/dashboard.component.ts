@@ -58,7 +58,7 @@ export class DashboardComponent {
   }
 
   formerGroupes(nomListe: string): void {
-    const tailleGroupe = 3;  // Ici tu peux rendre ça dynamique si tu veux
+    const tailleGroupe = 3; 
     this.groupesFormes[nomListe] = this.groupesService.formerGroupesAleatoires(nomListe, tailleGroupe);
   }
 }

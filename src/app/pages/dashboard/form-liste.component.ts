@@ -15,36 +15,37 @@ import { Personne } from '../../models/personne.model';
         name="nomListe"
         placeholder="Nom de la nouvelle liste"
         required
+        minlength="4"
+        maxlength="49"
       />
-
       <button type="submit">Créer la liste</button>
     </form>
 
     <h3>Ajouter une personne</h3>
     <form (ngSubmit)="ajouterPersonne()" class="form">
+
       <input
         type="text"
         [(ngModel)]="nouvellePersonne.nom"
         name="nom"
         placeholder="Nom"
         required
+        minlength="4"
+        maxlength="49"
       />
-      <input
-        type="text"
-        [(ngModel)]="nouvellePersonne.genre"
-        name="genre"
-        placeholder="Genre"
-        required
-      />
-      <input
-        type="number"
-        [(ngModel)]="nouvellePersonne.aisanceFrancais"
-        name="aisanceFrancais"
-        placeholder="Aisance Français (1-5)"
-        min="1"
-        max="5"
-        required
-      />
+
+      <select [(ngModel)]="nouvellePersonne.genre" name="genre" required>
+        <option value="" disabled selected>Choisir un genre</option>
+        <option value="masculin">Masculin</option>
+        <option value="féminin">Féminin</option>
+        <option value="ne se prononce pas">Ne se prononce pas</option>
+      </select>
+
+      <select [(ngModel)]="nouvellePersonne.aisanceFrancais" name="aisanceFrancais" required>
+        <option value="" disabled selected>Aisance en français</option>
+        <option *ngFor="let n of [1, 2, 3, 4]" [value]="n">{{ n }}</option>
+      </select>
+
       <label>
         Ancien DWWM
         <input
@@ -53,28 +54,26 @@ import { Personne } from '../../models/personne.model';
           name="ancienDWWM"
         />
       </label>
-      <input
-        type="number"
-        [(ngModel)]="nouvellePersonne.niveauTechnique"
-        name="niveauTechnique"
-        placeholder="Niveau technique (1-5)"
-        min="1"
-        max="5"
-        required
-      />
-      <input
-        type="text"
-        [(ngModel)]="nouvellePersonne.profil"
-        name="profil"
-        placeholder="Profil"
-        required
-      />
+
+      <select [(ngModel)]="nouvellePersonne.niveauTechnique" name="niveauTechnique" required>
+        <option value="" disabled selected>Niveau technique</option>
+        <option *ngFor="let n of [1, 2, 3, 4]" [value]="n">{{ n }}</option>
+      </select>
+
+      <select [(ngModel)]="nouvellePersonne.profil" name="profil" required>
+        <option value="" disabled selected>Profil</option>
+        <option value="timide">Timide</option>
+        <option value="réservé">Réservé</option>
+        <option value="à l’aise">À l’aise</option>
+      </select>
+
       <input
         type="number"
         [(ngModel)]="nouvellePersonne.age"
         name="age"
         placeholder="Âge"
-        min="0"
+        min="1"
+        max="99"
         required
       />
 
@@ -95,11 +94,8 @@ import { Personne } from '../../models/personne.model';
       margin-bottom: 1rem;
       flex-wrap: wrap;
     }
-    input, label {
+    input, select, label {
       margin-right: 0.5rem;
-    }
-    input[type="checkbox"] {
-      margin-left: 0.5rem;
     }
     button {
       padding: 0.5rem 1rem;
@@ -113,43 +109,42 @@ export class FormListeComponent {
 
   nouvellePersonne: Personne = {
     nom: '',
-    genre: '',
+    genre: 'masculin',
     aisanceFrancais: 1,
     ancienDWWM: false,
     niveauTechnique: 1,
-    profil: '',
-    age: 0
+    profil: 'timide',
+    age: 18
   };
 
   @Output() nouvelleListe = new EventEmitter<{ nom: string; personnes: Personne[] }>();
 
   ajouterPersonne() {
-    // Validation simple
-    if (!this.nouvellePersonne.nom.trim()) return;
+    const nom = this.nouvellePersonne.nom.trim();
+    if (nom.length < 4 || nom.length > 49) return;
 
     this.personnes.push({ ...this.nouvellePersonne });
 
-    // Réinitialiser le formulaire personne
     this.nouvellePersonne = {
       nom: '',
-      genre: '',
+      genre: 'masculin',
       aisanceFrancais: 1,
       ancienDWWM: false,
       niveauTechnique: 1,
-      profil: '',
-      age: 0
+      profil: 'timide',
+      age: 18
     };
   }
 
   onSubmit() {
-    if (!this.nomListe.trim()) return;
+    const nom = this.nomListe.trim();
+    if (nom.length < 4 || nom.length > 49) return;
 
     this.nouvelleListe.emit({
-      nom: this.nomListe.trim(),
+      nom,
       personnes: this.personnes
     });
 
-    // Reset
     this.nomListe = '';
     this.personnes = [];
   }
