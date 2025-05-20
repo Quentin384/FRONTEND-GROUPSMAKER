@@ -1,10 +1,7 @@
-# 🎯 Application de Création de Groupes Simplon
+# 🎯 Application de Création de Groupes – Projet Fullstack Angular
 
-Bienvenue dans ce projet de création dynamique de groupes d’apprenants Simplon, développé dans le cadre de ma formation en développement Fullstack.  
+Bienvenue dans ce projet de création dynamique de groupes d’apprenants Simplon, développé dans le cadre de ma formation en développement Fullstack.
 Cette application vise à constituer des groupes équilibrés selon des critères personnalisés, tout en assurant une bonne expérience utilisateur sur tous les supports.
-
-🔗 [Voir la démo (si disponible)](https://...)  
-📁 [Voir le dépôt GitHub](https://github.com/Quentin384/Groupes-Listes)
 
 ---
 
@@ -23,96 +20,120 @@ Pensée **mobile-first**, elle s’adapte aux smartphones, tablettes et ordinate
 
 ---
 
-## ⚙️ Fonctionnalités principales
-
-- ✅ Page vitrine avec présentation de l’application
-- ✅ Connexion simulée (via JSON, pas d’inscription réelle)
-- ✅ Gestion des utilisateurs : ajout, modification, suppression
-- ✅ Fiches apprenants avec champs personnalisés
-- ✅ Génération aléatoire de groupes équilibrés selon critères définis
-- ✅ Historique des tirages pour éviter les doublons
-- ✅ Modification manuelle des groupes via drag & drop
-- ✅ Validation finale qui verrouille les groupes
-- ✅ Gestion du compte utilisateur (modification, suppression)
-- ✅ Rappel périodique des conditions générales à valider
-
----
-
 ## 📱 Responsive Design
 
 L’interface est conçue en **mobile-first** : elle s’adapte automatiquement aux différentes tailles d’écran (smartphone, tablette, desktop), assurant accessibilité et lisibilité à tout moment.
 
 ---
 
-## 📚 Contexte pédagogique
+## 📚 Objectif pédagogique
 
-### 🎯 Objectifs pédagogiques
+Projet structuré en 4 versions évolutives, avec montée en compétences sur la conception UI, l’intégration Angular, le développement métier en POO, la communication avec une API backend, la gestion de base de données, les tests et le déploiement continu.
 
-- Répondre à un **cahier des charges précis**
-- Produire une **maquette responsive** conforme à la charte graphique
-- Appliquer les bonnes pratiques de **sécurité**, **maintenabilité**, et **architecture**
-- Implémenter des **tests unitaires front-end** (Vitest / Jest)
-- Utiliser **GitHub** en mode projet : gestion de tickets, branches, déploiement
-- Documenter le projet (code et usage)
-- Déployer sur un **serveur de production public**
-
-### 🧑‍🤝‍🧑 Organisation
-
-- Travail en **équipe de 3 à 4 personnes**, ou en autonomie
-- 8 demi-journées de développement entre le **15 et le 20 mai**
-- Suivi agile avec tickets, prototypage, et gestion structurée (Git flow)
+| Version | Description |
+|---------|-------------|
+| **V0**  | Maquette Figma desktop + intégration HTML/CSS statique |
+| **V1**  | Application dynamique Angular (POO, TypeScript), front seul |
+| **V2**  | Application Angular avec backend Node.js (API REST), base de données MySQL |
+| **V3**  | Refonte fullstack Angular + backend moderne, évolutivité et scalabilité |
 
 ---
 
-## 🧩 Étapes clés du projet
+## 🧩 Fonctionnalités
 
-- ✅ Maquettage responsive (mobile / tablette / desktop)
-- ✅ Intégration HTML/CSS fidèle à la maquette
-- ✅ Architecture modulaire en **Angular 19 + TypeScript + POO**
-- ✅ Composants métiers :
-  - Génération de groupes
-  - Critères de mixité
-  - Drag & drop personnalisé
-- ✅ Tests unitaires avec **Vitest / Jest**
-- ✅ Documentation complète
-- ✅ Déploiement continu via **GitHub Pages**
-
----
-
-## 🛠 Stack technique
-
-- HTML5 / CSS3 (Mobile-first)
-- Angular 19 + TypeScript (POO)
-- JSON (données simulées)
-- Vitest / Jest (tests unitaires)
-- Git / GitHub (versionnage et CI/CD)
+- 🎨 UI responsive desktop/tablette/mobile (mobile-first)
+- 📋 Gestion dynamique d’une liste d’apprenants avec critères personnalisés
+- 🧠 Génération aléatoire de groupes équilibrés selon critères et historique
+- 🔁 Historique des groupes pour éviter répétitions
+- ✋ Réorganisation manuelle des groupes via drag & drop Angular CDK
+- 🔐 Authentification sécurisée (V2+)
+- 🧰 CRUD complet (apprenants, groupes, utilisateurs)
+- ✉️ Notifications par mail (V2+)
+- 🛡️ Sécurisation des routes Angular et API backend avec gestion des rôles
+- ⚙️ Backend Node.js / Express, API REST, base MySQL
+- 🧪 Tests unitaires (Vitest / Jest) et tests E2E (Cypress / Playwright)
+- 🚀 Déploiement continu avec GitLab CI/CD
 
 ---
 
-## 🔐 Sécurité & Limitations
+## 🛠️ Stack technique
 
-- Connexion simulée (pas de backend réel)
-- Données non persistantes (local JSON uniquement)
-- Pas d’authentification réelle dans cette version
-
----
-
-## ✅ Évaluation et livrables
-
-- 🎯 Maquette respectée et responsive
-- 🧱 Intégration fidèle et architecture claire
-- 🌐 Site déployé et accessible publiquement
-- 🔧 Dépôt GitHub complet avec tickets, branches, documentation
-- 🎤 Présentation orale avec démonstration live
-- ✔️ Fonctionnalités complètes conformément au cahier des charges
+| Frontend                | Backend                       | Base de données      | Tests                      | Outils                   |
+|------------------------|------------------------------|----------------------|----------------------------|--------------------------|
+| Angular 19 + TypeScript | Node.js + Express (TypeScript) | MySQL (relationnelle) | Vitest / Jest (unitaires)<br>Cypress / Playwright (E2E) | Git / GitLab<br>CI/CD<br>EditorConfig<br>Angular CLI<br>Linter / GrumJS |
 
 ---
 
-## 📌 Auteur
+## 📐 Architecture technique
 
-👨‍💻 Quentin – Étudiant développeur Fullstack Java / JS  
-🎓 Projet réalisé dans le cadre de la formation Simplon  
-📆 Projet en solo – Mai 2025  
-🎯 Rôle principal : logique métier (génération de groupes, critères), POO, intégration responsive avec Angular 19
+- **Architecture MVC** avec Angular côté client (SPA)
+- Programmation orientée objet (POO) dans tout le projet
+- Communication via appels HTTP (fetch / Angular HttpClient) vers API REST Node.js
+- Services Angular pour la logique métier
+- Utilisation de Angular CDK pour le drag & drop
+- Maquettes et styles responsive, animations CSS, toasts Angular Material
+- Séparation claire des responsabilités (composants, services, modèles, routes)
 
+---
 
+## 🚀 Déploiement
+
+- Intégration continue et déploiement continu (CI/CD) avec GitLab
+- Environnements séparés : **test** et **production**
+- Déploiement manuel du test vers la production
+- Persistance des données garantie entre les déploiements
+
+---
+
+## 📆 Organisation du projet
+
+| Version | Dates         | Modalité          |
+|---------|---------------|-------------------|
+| V0      | 03/04 – 11/04 | Solo              |
+| V1      | 28/04 – 20/05 | Solo, Angular front uniquement |
+| V2      | 02/06 – 11/06 | Solo, Angular + Node.js backend |
+| V3      | 23/06 – 04/07 | Solo, fullstack Angular + backend, scalabilité |
+
+---
+
+## ✅ Livrables attendus
+
+- Maquettes Figma responsives et prototypées
+- Code source Angular (frontend) et Node.js (backend)
+- README détaillé et technique
+- Wiki fonctionnel (V2+)
+- MCD, MLD, script SQL de la base
+- Tests unitaires et E2E automatisés
+- Application déployée en ligne (test + prod)
+- Présentation orale selon versions (10 à 30 minutes)
+
+---
+
+## 📌 Méthodologie & Outils
+
+- Git structuré avec **Gitflow**
+- Gestion des tâches avec **GitLab issues**
+- Intégration continue avec exécution automatique des tests
+- Documentation via README + Wiki
+- Conventions strictes et outils de qualité (linter, grumjs)
+- Architecture modulaire et maintenable
+
+---
+
+## 📈 Perspectives d’évolution
+
+- Mise en place d’une authentification OAuth2 / JWT
+- WebSocket pour collaboration en temps réel sur les groupes
+- Gestion fine des droits utilisateurs (ACL)
+- Dashboard de statistiques sur les groupes formés
+
+---
+
+## 👨‍💻 Auteur
+
+**Quentin**  
+Développeur Fullstack Angular / Node.js  
+Projet solo réalisé entre avril et juillet 2025 dans le cadre de la formation Simplon.  
+Compétences clés : Angular 19, TypeScript, Node.js, MySQL, tests automatisés, CI/CD
+
+---
