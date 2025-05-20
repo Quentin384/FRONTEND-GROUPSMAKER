@@ -128,9 +128,9 @@ Projet structuré en 4 versions évolutives, avec montée en compétences sur la
 
 ---
 
-## 👨‍💻 Auteur
+## 📌 Auteur
 
-**Quentin**  
-Développeur Fullstack Angular / Java Spring Boot  
-Projet solo réalisé en mai-juin 2025 dans le cadre de la formation Simplon.  
-Compétences clés : Angular 19, TypeScript, Java 17, Spring Boot 3, PostgreSQL, tests automatisés, CI/CD  
+👨‍💻 Quentin – Étudiant développeur Fullstack Java / Angular  
+🎓 Projet réalisé dans le cadre de la formation Simplon  
+📆 Projet en solo – Mai 2025  
+🎯 Rôle principal : logique métier (génération de groupes, critères), POO, intégration responsive avec Angular 19
