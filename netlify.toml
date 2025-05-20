@@ -1,3 +1,8 @@
 [build]
   command = "ng build --configuration production"
   publish = "dist/generateur-groupes"
+
+[[plugins]]
+  package = "@netlify/angular-runtime"
+  [plugins.inputs]
+  enabled = false
