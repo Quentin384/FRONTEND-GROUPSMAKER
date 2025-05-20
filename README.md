@@ -5,6 +5,13 @@ Cette application vise à constituer des groupes équilibrés selon des critère
 
 ---
 
+## 🚀 Essayer l’application en ligne
+
+Vous pouvez tester la version déployée de l’application en suivant ce lien :  
+[https://mon-generateur-groupes.netlify.app](https://mon-generateur-groupes.netlify.app)  
+
+---
+
 ## 🚀 Présentation
 
 Cette application web permet de créer intelligemment des groupes d’apprenants tout en évitant la répétition des compositions précédentes.  
