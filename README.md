@@ -37,19 +37,6 @@ L’interface est conçue en **mobile-first** : elle s’adapte automatiquement 
 
 ---
 
-## 📚 Objectif pédagogique
-
-Projet structuré en 4 versions évolutives, avec montée en compétences sur la conception UI, l’intégration Angular, le développement métier en POO, la communication avec une API backend, la gestion de base de données, les tests et le déploiement continu.
-
-| Version | Description                                         |
-|---------|---------------------------------------------------|
-| **V0**  | Maquette Figma desktop + intégration HTML/CSS statique (15 mai)        |
-| **V1**  | Application dynamique Angular (POO, TypeScript), front seul (16-20 mai) |
-| **V2**  | Application Angular avec backend Java Spring Boot, base de données PostgreSQL (21-30 mai) |
-| **V3**  | Fullstack évolutif et scalable avec architecture robuste et tests avancés (1-10 juin) |
-
----
-
 ## 🧩 Fonctionnalités
 
 - 🎨 UI responsive desktop/tablette/mobile (mobile-first)  
@@ -62,7 +49,7 @@ Projet structuré en 4 versions évolutives, avec montée en compétences sur la
 - ✉️ Notifications par mail (V2+)  
 - 🛡️ Sécurisation des routes Angular et API backend avec gestion des rôles  
 - 🧪 Tests unitaires (Vitest / Jest) et tests backend (JUnit, Mockito)  
-- 🚀 Déploiement continu avec GitHub Actions CI/CD  
+- 🚀 Déploiement continu manuel via Netlify (branche **main**)
 
 ---
 
@@ -70,84 +57,43 @@ Projet structuré en 4 versions évolutives, avec montée en compétences sur la
 
 | Frontend                | Backend                          | Base de données        | Tests                             | Outils                       |
 |------------------------|---------------------------------|------------------------|----------------------------------|-----------------------------|
-| Angular 19 + TypeScript | Java 17+ Spring Boot 3 (REST API) | PostgreSQL              | Vitest / Jest (unitaires front)<br>JUnit, Mockito (backend) | Git / GitHub<br>CI/CD (GitHub Actions)<br>Angular CLI<br>Linter, Prettier |
-
----
-
-## 📐 Architecture technique
-
-- **Architecture REST API** avec backend Spring Boot  
-- Programmation orientée objet (POO) dans Angular et Java  
-- Communication via appels HTTP (Angular HttpClient) vers API REST sécurisée  
-- Services Angular pour la logique métier côté client  
-- Utilisation Angular CDK pour drag & drop  
-- Maquettes et styles responsive, animations CSS, toasts Angular Material  
-- Séparation claire des responsabilités (composants, services, modèles, routes)  
+| Angular 19 + TypeScript | Java 17+ Spring Boot 3 (REST API) | PostgreSQL              | Vitest / Jest (unitaires front)<br>JUnit, Mockito (backend) | Git / GitHub<br>Netlify (déploiement)<br>Angular CLI<br>Linter, Prettier |
 
 ---
 
 ## 🚀 Déploiement
 
-- Intégration continue et déploiement continu (CI/CD) avec GitHub Actions  
-- Environnements séparés : **test** et **production**  
-- Déploiement manuel du test vers la production  
-- Persistance des données garantie via PostgreSQL  
+L’application est déployée sur Netlify via un lien public.  
+Le déploiement est réalisé manuellement depuis la branche **main** du dépôt GitHub, synchronisée avec Netlify.  
 
----
-
-## 📆 Organisation du projet
-
-| Version | Dates           | Modalité                  |
-|---------|-----------------|---------------------------|
-| V0      | 15 mai          | Solo                      |
-| V1      | 16 – 20 mai     | Solo, Angular front seul  |
-| V2      | 21 – 30 mai     | Solo, Angular + Spring Boot backend, PostgreSQL |
-| V3      | 1 – 10 juin     | Solo, fullstack évolutif et scalable |
-
----
-
-## ✅ Livrables attendus
-
-- Maquettes Figma responsives et prototypées  
-- Code source Angular (frontend) et Java Spring Boot (backend)  
-- README détaillé et technique  
-- Wiki fonctionnel (V2+)  
-- MCD, MLD, scripts SQL PostgreSQL  
-- Tests unitaires et automatisés front & backend  
-- Application déployée en ligne (test + prod)  
-- Présentation orale selon versions (10 à 30 minutes)  
-
----
-
-## 📌 Méthodologie & Outils
-
-- Git structuré avec **Gitflow**  
-- Gestion des tâches avec **GitHub issues**  
-- Intégration continue avec exécution automatique des tests  
-- Documentation via README + Wiki  
-- Conventions strictes et outils de qualité (linter, formatter)  
-- Architecture modulaire, maintenable et sécurisée  
-
----
-
-## 📈 Perspectives d’évolution
-
-- Mise en place d’une authentification OAuth2 / JWT avec Spring Security  
-- WebSocket pour collaboration en temps réel sur les groupes  
-- Gestion fine des droits utilisateurs (ACL)  
-- Dashboard statistique et rapports  
+Une automatisation via CI/CD (GitHub Actions) pourra être envisagée ultérieurement.
 
 ---
 
 ## 📌 Auteur
 
-👨‍💻 Quentin – Étudiant développeur Fullstack Java / Angular  
-🎓 Projet réalisé dans le cadre de la formation Simplon  
-📆 Projet en solo – Mai 2025  
-🎯 Rôle principal : logique métier (génération de groupes, critères), POO, intégration responsive avec Angular 19
+👨‍💻 **Quentin** – Étudiant développeur Fullstack Java / Angular  
+🎓 Projet réalisé en solo dans le cadre de la formation Simplon  
+🎯 Rôle principal : développement complet du projet, incluant  
+- la logique métier (génération de groupes, critères)  
+- l’architecture frontend et backend  
+- l’intégration responsive avec Angular 19  
 
-![Capture](./Docu/Capture/Capture%20d'écran%202025-05-20%20102802.png)
+📆 Projet solo – Mai 2025
 
-![Capture](./Docu/Capture/Capture%20d'écran%202025-05-20%20102811.png)
+---
 
-![Capture](./Docu/Capture/Capture%20d'écran%202025-05-20%20102824.png)
+## 📸 Captures d'écran
+
+Voici quelques aperçus de l’application en fonctionnement :
+
+![Capture écran 1](./Docu/Capture/Capture%20d'écran%202025-05-20%20102802.png)  
+*Vue générale de la création de groupes*
+
+![Capture écran 2](./Docu/Capture/Capture%20d'écran%202025-05-20%20144658.png)  
+*Interface responsive sur tablette*
+
+![Capture écran 3](./Docu/Capture/Capture%20d'écran%202025-05-20%20102811.png)  
+*Gestion des critères personnalisés*
+
+
