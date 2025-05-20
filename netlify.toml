@@ -1,0 +1,7 @@
+[build]
+command = "ng build --configuration production"
+publish = "dist/generateur-groupes"
+
+[plugins]
+# Aucun plugin activé
+
