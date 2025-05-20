@@ -5,10 +5,14 @@ Cette application vise à constituer des groupes équilibrés selon des critère
 
 ---
 
-## 🚀 Essayer l’application en ligne
+## 🚀 Découvrez et testez l’application en ligne !
 
-Vous pouvez tester la version déployée de l’application en suivant ce lien :  
-[https://mon-generateur-groupes.netlify.app](https://mon-generateur-groupes.netlify.app)  
+L’application est déployée et accessible immédiatement.  
+Cliquez simplement sur le lien ci-dessous pour la tester en conditions réelles :  
+
+👉 [Tester l’application maintenant](https://mon-generateur-groupes.netlify.app)  
+
+N’hésitez pas à explorer ses fonctionnalités et à me faire part de vos retours.
 
 ---
 
