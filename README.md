@@ -134,3 +134,9 @@ Projet structuré en 4 versions évolutives, avec montée en compétences sur la
 🎓 Projet réalisé dans le cadre de la formation Simplon  
 📆 Projet en solo – Mai 2025  
 🎯 Rôle principal : logique métier (génération de groupes, critères), POO, intégration responsive avec Angular 19
+
+![Capture](./Docu/Capture/Capture%20d'écran%202025-05-20%20102802.png)
+
+![Capture](./Docu/Capture/Capture%20d'écran%202025-05-20%20102811.png)
+
+![Capture](./Docu/Capture/Capture%20d'écran%202025-05-20%20102824.png)
