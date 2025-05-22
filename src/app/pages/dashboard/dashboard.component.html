@@ -6,12 +6,16 @@
   <div *ngFor="let liste of listes" class="liste">
     <h2>{{ liste.nom }} ({{ liste.personnes.length }} personnes, {{ liste.tirages }} tirages)</h2>
 
-    <!-- Config groupe -->
+    <!-- Configuration des groupes (si tirage non validé) -->
     <div *ngIf="!estTirageValide(liste.nom)" class="config">
       <label>
         Nombre de groupes :
-        <input type="number" min="1" [value]="nombreGroupes[liste.nom] || 1"
-               (input)="nombreGroupes[liste.nom] = $any($event.target).valueAsNumber" />
+        <input
+          type="number"
+          min="1"
+          [value]="nombreGroupes[liste.nom] || 1"
+          (input)="nombreGroupes[liste.nom] = $any($event.target).valueAsNumber"
+        />
       </label>
 
       <button (click)="initNomsGroupes(liste.nom)">Définir les noms</button>
@@ -45,18 +49,51 @@
       <li *ngFor="let personne of liste.personnes">👤 {{ personne.nom }}</li>
     </ul>
 
-    <!-- Affichage des groupes formés -->
-    <div *ngIf="groupesFormes[liste.nom]?.length">
+    <!-- Affichage des groupes formés (tirage en cours ou dernier tirage validé) -->
+    <div *ngIf="(groupesFormes[liste.nom]?.length || estTirageValide(liste.nom))">
       <h3>Groupes formés :</h3>
-      <div *ngFor="let groupe of groupesFormes[liste.nom]">
+      <div
+        *ngFor="
+          let groupe of (
+            groupesFormes[liste.nom]?.length
+              ? groupesFormes[liste.nom]
+              : historiqueGroupes[liste.nom]?.length
+              ? historiqueGroupes[liste.nom][historiqueGroupes[liste.nom].length - 1]?.groupes
+              : []
+          )
+        "
+      >
         <strong>{{ groupe.nom }}</strong>
         <ul>
           <li *ngFor="let p of groupe.membres">{{ p.nom }}</li>
         </ul>
       </div>
 
-      <button *ngIf="!estTirageValide(liste.nom)" (click)="validerTirage(liste.nom)">Valider le tirage</button>
-      <p *ngIf="estTirageValide(liste.nom)" class="valide">Tirage validé, plus aucune modification possible.</p>
+      <button *ngIf="!estTirageValide(liste.nom)" (click)="validerTirage(liste.nom)">
+        Valider le tirage
+      </button>
+      <p *ngIf="estTirageValide(liste.nom)" class="valide">
+        Tirage validé, plus aucune modification possible.
+      </p>
+    </div>
+
+    <!-- Affichage de l'historique des groupes formés (tirages précédents, hors dernier tirage) -->
+    <div *ngIf="historiqueGroupes[liste.nom] && historiqueGroupes[liste.nom].length > 1">
+      <h3>Historique des groupes formés :</h3>
+      <div *ngFor="let tirage of historiqueGroupes[liste.nom]?.slice(0, -1); let idx = index">
+        <p>
+          <em>Tirage du {{ tirage.date | date: 'short' }} - Validé :
+            {{ tirage.valide ? 'Oui' : 'Non' }}</em
+          >
+        </p>
+        <div *ngFor="let groupe of tirage.groupes">
+          <strong>{{ groupe.nom }}</strong>
+          <ul>
+            <li *ngFor="let p of groupe.membres">{{ p.nom }}</li>
+          </ul>
+        </div>
+        <hr />
+      </div>
     </div>
   </div>
 </div>
