@@ -70,19 +70,19 @@
     }
   }
 
+  // ✅ Correction : media query en-dehors de .register
   @media (max-width: 500px) {
-  .register {
     padding: 1.2rem;
 
     h2 {
       font-size: 1.5rem;
     }
 
-    .form input,
-    .form button {
-      font-size: 0.95rem;
+    .form {
+      input,
+      button {
+        font-size: 0.95rem;
+      }
     }
   }
-}
-
 }

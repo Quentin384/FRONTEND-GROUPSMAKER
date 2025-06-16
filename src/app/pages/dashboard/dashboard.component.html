@@ -1,4 +1,9 @@
 <div class="dashboard">
+  <!-- Bouton admin (visible uniquement pour les ADMIN) -->
+  <button *ngIf="isAdmin()" (click)="redirigerVersAdmin()" class="btn-admin">
+    🎛 Accéder à l’administration
+  </button>
+
   <h1>Vos listes</h1>
 
   <app-form-liste (nouvelleListe)="ajouterListe($event)"></app-form-liste>
@@ -6,7 +11,7 @@
   <div *ngFor="let liste of listes" class="liste">
     <h2>{{ liste.nom }} ({{ liste.personnes.length }} personnes, {{ liste.tirages }} tirages)</h2>
 
-    <!-- Configuration des groupes (si tirage non validé) -->
+    <!-- Configuration des groupes -->
     <div *ngIf="!estTirageValide(liste.nom)" class="config">
       <label>
         Nombre de groupes :
@@ -49,19 +54,17 @@
       <li *ngFor="let personne of liste.personnes">👤 {{ personne.nom }}</li>
     </ul>
 
-    <!-- Affichage des groupes formés (tirage en cours ou dernier tirage validé) -->
+    <!-- Groupes formés (en cours ou validés) -->
     <div *ngIf="(groupesFormes[liste.nom]?.length || estTirageValide(liste.nom))">
       <h3>Groupes formés :</h3>
       <div
-        *ngFor="
-          let groupe of (
-            groupesFormes[liste.nom]?.length
-              ? groupesFormes[liste.nom]
-              : historiqueGroupes[liste.nom]?.length
+        *ngFor="let groupe of (
+          groupesFormes[liste.nom]?.length
+            ? groupesFormes[liste.nom]
+            : historiqueGroupes[liste.nom]?.length
               ? historiqueGroupes[liste.nom][historiqueGroupes[liste.nom].length - 1]?.groupes
               : []
-          )
-        "
+        )"
       >
         <strong>{{ groupe.nom }}</strong>
         <ul>
@@ -77,14 +80,14 @@
       </p>
     </div>
 
-    <!-- Affichage de l'historique des groupes formés (tirages précédents, hors dernier tirage) -->
+    <!-- Historique des tirages précédents -->
     <div *ngIf="historiqueGroupes[liste.nom] && historiqueGroupes[liste.nom].length > 1">
       <h3>Historique des groupes formés :</h3>
       <div *ngFor="let tirage of historiqueGroupes[liste.nom]?.slice(0, -1); let idx = index">
         <p>
-          <em>Tirage du {{ tirage.date | date: 'short' }} - Validé :
-            {{ tirage.valide ? 'Oui' : 'Non' }}</em
-          >
+          <em>
+            Tirage du {{ tirage.date | date: 'short' }} – Validé : {{ tirage.valide ? 'Oui' : 'Non' }}
+          </em>
         </p>
         <div *ngFor="let groupe of tirage.groupes">
           <strong>{{ groupe.nom }}</strong>

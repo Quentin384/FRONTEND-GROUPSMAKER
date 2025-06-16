@@ -3,6 +3,7 @@ export class Utilisateur {
     public id: string,
     public email: string,
     public password: string,
+    public role: string = 'USER',
     public lastTermsAcceptedAt?: Date | null
   ) {}
 }

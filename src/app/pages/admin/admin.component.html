@@ -1,0 +1,34 @@
+<div class="admin-dashboard">
+  <h1>Administration</h1>
+
+  <section class="users">
+    <h2>Liste des utilisateurs</h2>
+    <ul>
+      <li *ngFor="let user of utilisateurs">
+        {{ user.email }} ({{ user.role }})
+        <button (click)="supprimerUtilisateur(user.id)">Supprimer</button>
+      </li>
+    </ul>
+  </section>
+
+  <section class="stats">
+    <h2>Statistiques du site</h2>
+    <ul>
+      <li>Nombre de listes créées par utilisateur : {{ statistiques.listesParUtilisateur }}</li>
+      <li>Nombre de personnes par liste en moyenne : {{ statistiques.personnesParListe }}</li>
+      <li>Nombre de groupes créés par liste en moyenne : {{ statistiques.groupesParListe }}</li>
+      <li>Nombre de listes partagées : {{ statistiques.listesPartagees }}</li>
+      <li>Utilisateurs par liste partagée en moyenne : {{ statistiques.utilisateursParListePartagee }}</li>
+    </ul>
+  </section>
+
+  <section class="settings">
+    <h2>Modifier les paramètres du site</h2>
+    <form #formSettings="ngForm" (submit)="modifierParametres(formSettings.value)">
+      <input type="text" name="title" ngModel placeholder="Titre du site">
+      <input type="text" name="logo" ngModel placeholder="URL du logo">
+      <input type="color" name="primaryColor" ngModel>
+      <button type="submit">Enregistrer</button>
+    </form>
+  </section>
+</div>
