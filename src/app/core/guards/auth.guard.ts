@@ -10,13 +10,21 @@ export const AuthGuard: CanActivateFn = (route, state) => {
   const requiredRole = route.data['role'];
   const userRole = authService.getRole();
 
+  console.log('🔐 AuthGuard exécuté');
+  console.log('➡️ Connecté :', isLoggedIn);
+  console.log('🎯 Rôle requis :', requiredRole);
+  console.log('👤 Rôle utilisateur :', userRole);
+
   if (!isLoggedIn) {
+    console.log('⛔ Non connecté → redirection vers /login');
     return router.parseUrl('/login');
   }
 
   if (requiredRole && userRole !== requiredRole) {
+    console.log('⛔ Rôle insuffisant → redirection vers /dashboard');
     return router.parseUrl('/dashboard');
   }
 
+  console.log('✅ Accès autorisé');
   return true;
 };
