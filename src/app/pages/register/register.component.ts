@@ -1,5 +1,3 @@
-// src/app/pages/register/register.component.ts
-
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -17,9 +15,8 @@ export class RegisterComponent {
   username = '';
   email = '';
   password = '';
-  confirmPassword = '';   // Vérification confirmation mot de passe
+  confirmPassword = '';
   errorMessage = '';
-  successMessage = '';     // Message à l'utilisateur en cas de succès
 
   constructor(
     private authService: AuthService,
@@ -31,28 +28,29 @@ export class RegisterComponent {
    */
   onRegister(): void {
     this.errorMessage = '';
-    this.successMessage = '';
 
-    // 1. Vérification que les mots de passe correspondent
+    // Vérifie la correspondance des mots de passe
     if (this.password !== this.confirmPassword) {
       this.errorMessage = 'Les mots de passe ne correspondent pas.';
       return;
     }
 
-    // 2. Appel du service d'inscription
+    // Appelle l’API pour s’enregistrer
     this.authService.register(this.username, this.email, this.password)
       .subscribe({
         next: () => {
-          // Succès : on affiche un message utile sans confondre avec login
-          this.successMessage = 'Compte créé avec succès ! Connectez-vous via la page de login.';
-          // Reset du formulaire
+          // Réinitialise le formulaire
           this.username = '';
           this.email = '';
           this.password = '';
           this.confirmPassword = '';
+
+          // Redirige vers /login avec message optionnel
+          this.router.navigate(['/login'], {
+            state: { message: 'Compte créé avec succès ! Vous pouvez maintenant vous connecter.' }
+          });
         },
         error: err => {
-          // Ici, seul l'erreur de signup est gérée
           this.errorMessage = err.error?.message || 'Échec de la création de compte.';
         }
       });

@@ -23,7 +23,7 @@ export class LoginComponent {
     this.authService.login(this.email, this.password).subscribe({
       next: (success) => {
         if (success) {
-        //  this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard']);
         } else {
           this.errorMessage = 'Identifiants incorrects';
         }

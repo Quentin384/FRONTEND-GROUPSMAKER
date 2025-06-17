@@ -1,3 +1,4 @@
+// src/app/core/guards/auth.guard.ts
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -7,22 +8,24 @@ export const AuthGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   const isLoggedIn = authService.isLoggedIn();
-  const requiredRole = route.data['role'];
+  const requiredRoles = route.data['role'];
   const userRole = authService.getRole();
 
   console.log('🔐 AuthGuard exécuté');
   console.log('➡️ Connecté :', isLoggedIn);
-  console.log('🎯 Rôle requis :', requiredRole);
+  console.log('🎯 Rôle requis :', requiredRoles);
   console.log('👤 Rôle utilisateur :', userRole);
 
   if (!isLoggedIn) {
-    console.log('⛔ Non connecté → redirection vers /login');
+    console.warn('⛔ Non connecté → redirection vers /login');
     return router.parseUrl('/login');
   }
 
-  if (requiredRole && userRole !== requiredRole) {
-    console.log('⛔ Rôle insuffisant → redirection vers /dashboard');
-    return router.parseUrl('/dashboard');
+  const roles = Array.isArray(requiredRoles) ? requiredRoles : [requiredRoles];
+
+  if (requiredRoles && !roles.includes(userRole)) {
+    console.warn('⛔ Rôle insuffisant → redirection vers /');
+    return router.parseUrl('/');
   }
 
   console.log('✅ Accès autorisé');

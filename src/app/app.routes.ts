@@ -1,3 +1,4 @@
+// src/app/routes.ts
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './core/guards/auth.guard';
@@ -18,7 +19,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     canActivate: [AuthGuard],
-    data: { role: 'ADMIN' },
+    data: { role: ['USER', 'ADMIN'] }, // ✅ les deux rôles peuvent accéder
     loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent)
   },
   {
