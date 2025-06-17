@@ -34,15 +34,18 @@ export class DashboardComponent {
   // Critères de mixité cochés par liste
   criteresMixite: { [nomListe: string]: { anciensDWWM: boolean; mixAge: boolean } } = {};
 
-  constructor(
-    private groupesService: GroupesService,
-    private authService: AuthService,
-    private router: Router
-  ) {
-    // Initialisation : récupération des listes et de leur historique
-    this.listes = this.groupesService.getListes();
-    this.historiqueGroupes = this.groupesService.getHistoriqueGroupes();
-  }
+constructor(
+  private groupesService: GroupesService,
+  private authService: AuthService,
+  private router: Router
+) {
+  console.log('📦 Token JWT :', this.authService.getToken());
+  console.log('🔐 Rôle utilisateur :', this.authService.getRole());
+
+  // this.listes = this.groupesService.getListes();
+  // this.historiqueGroupes = this.groupesService.getHistoriqueGroupes();
+}
+
 
   // ✅ Méthode appelée dans le HTML pour afficher le bouton "admin"
   isAdmin(): boolean {

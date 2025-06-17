@@ -1,58 +1,60 @@
+// src/app/pages/register/register.component.ts
+
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../core/services/auth.service';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { RouterModule, Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
-  imports: [CommonModule, FormsModule]
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-  // Champs liés au formulaire
-  email = '';
   username = '';
+  email = '';
   password = '';
-  confirmPassword = '';
+  confirmPassword = '';   // Vérification confirmation mot de passe
   errorMessage = '';
+  successMessage = '';     // Message à l'utilisateur en cas de succès
 
   constructor(
-    private http: HttpClient,
-    private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   /**
-   * Appelée lors de la soumission du formulaire d'inscription.
-   * Valide les données et envoie une requête POST au backend.
+   * Envoi des données de création de compte au service AuthService.
    */
   onRegister(): void {
-    // Vérifie la correspondance des mots de passe
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    // 1. Vérification que les mots de passe correspondent
     if (this.password !== this.confirmPassword) {
-      this.errorMessage = "Les mots de passe ne correspondent pas.";
+      this.errorMessage = 'Les mots de passe ne correspondent pas.';
       return;
     }
 
-    // Prépare les données à envoyer au backend
-    const userData = {
-      username: this.username, // utilisé par le backend comme identifiant
-      password: this.password
-    };
-
-    // Envoie la requête d'inscription
-    this.http.post('http://localhost:8080/api/auth/register', userData).subscribe({
-      next: () => {
-        alert('Inscription réussie !');
-        this.router.navigate(['/login']);
-      },
-      error: err => {
-        console.error(err);
-        this.errorMessage = 'Erreur lors de l’inscription.';
-      }
-    });
+    // 2. Appel du service d'inscription
+    this.authService.register(this.username, this.email, this.password)
+      .subscribe({
+        next: () => {
+          // Succès : on affiche un message utile sans confondre avec login
+          this.successMessage = 'Compte créé avec succès ! Connectez-vous via la page de login.';
+          // Reset du formulaire
+          this.username = '';
+          this.email = '';
+          this.password = '';
+          this.confirmPassword = '';
+        },
+        error: err => {
+          // Ici, seul l'erreur de signup est gérée
+          this.errorMessage = err.error?.message || 'Échec de la création de compte.';
+        }
+      });
   }
 }

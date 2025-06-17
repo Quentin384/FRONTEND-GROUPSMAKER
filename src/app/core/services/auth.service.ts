@@ -2,87 +2,110 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { tap, map, catchError } from 'rxjs/operators';
 
-const TOKEN_KEY = 'jwt_token'; // Clé de stockage locale du token
+const TOKEN_KEY = 'jwt_token'; // Clé de stockage du JWT en localStorage
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  // URL de base de l'API d'authentification
   private readonly API_URL = 'http://localhost:8080/api/auth';
 
   constructor(private http: HttpClient) {}
 
   /**
-   * Authentifie l'utilisateur en envoyant les identifiants au backend.
-   * Le backend retourne un JWT (en texte brut) que l'on stocke en local.
+   * Authentifie l'utilisateur et stocke le JWT retourné.
+   * @returns Observable<boolean> indicateur de succès
    */
-  login(username: string, password: string): Observable<string> {
-    return this.http.post(this.API_URL + '/login', { username, password }, { responseType: 'text' })
-      .pipe(tap(token => localStorage.setItem(TOKEN_KEY, token)));
+  login(username: string, password: string): Observable<boolean> {
+    return this.http
+      .post(this.API_URL + '/login', { username, password }, { responseType: 'text' })
+      .pipe(
+        // Sauvegarde du token en localStorage
+        tap(token => localStorage.setItem(TOKEN_KEY, token)),
+        // En cas de succès, on renvoie true
+        map(() => true),
+        // En cas d'erreur (401, 500...), on renvoie false
+        catchError(() => of(false))
+      );
   }
 
   /**
-   * Supprime le token JWT du local storage (déconnexion).
+   * Enregistre un nouvel utilisateur via API.
+   * @returns Observable<any> réponse du backend
+   */
+  register(username: string, email: string, password: string): Observable<any> {
+    return this.http.post(
+      `${this.API_URL}/signup`,
+      { username, email, password },
+      { responseType: 'json' }
+    );
+  }
+
+  /**
+   * Supprime le token JWT du localStorage (déconnexion).
    */
   logout(): void {
     localStorage.removeItem(TOKEN_KEY);
   }
 
   /**
-   * Retourne le token JWT stocké localement.
+   * Récupère le token JWT stocké.
    */
   getToken(): string | null {
     return localStorage.getItem(TOKEN_KEY);
   }
 
   /**
-   * Vérifie si un utilisateur est connecté (présence d’un token JWT).
+   * Indique si un utilisateur est connecté (token présent).
    */
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
 
   /**
-   * Récupère le rôle de l'utilisateur connecté à partir du payload du JWT.
+   * Récupère les informations du payload JWT décodé.
+   */
+  private getPayload(): any | null {
+    const token = this.getToken();
+    if (!token) return null;
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * Récupère le rôle de l'utilisateur (champ 'role' du payload JWT).
    */
   getRole(): string | null {
-    const token = this.getToken();
-    if (!token) return null;
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.role || null;
-    } catch (e) {
-      return null;
-    }
+    const payload = this.getPayload();
+    return payload?.role || null;
   }
 
   /**
-   * Récupère le nom d'utilisateur (username) à partir du payload du JWT.
+   * Récupère le nom d'utilisateur ('sub' du payload JWT).
    */
   getUsername(): string | null {
-    const token = this.getToken();
-    if (!token) return null;
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.sub || null;
-    } catch (e) {
-      return null;
-    }
+    const payload = this.getPayload();
+    return payload?.sub || null;
   }
 
   /**
-   * Indique si l'utilisateur est administrateur.
+   * Vérifie si l'utilisateur a le rôle ADMIN.
    */
   isAdmin(): boolean {
     return this.getRole() === 'ADMIN';
   }
 
   /**
-   * Construit les en-têtes HTTP avec le token pour les requêtes protégées.
+   * Construit les en-têtes HTTP pour les requêtes protégées.
    */
-  withAuth(): { headers: HttpHeaders } {
+  private withAuth(): { headers: HttpHeaders } {
     const token = this.getToken();
     return {
       headers: new HttpHeaders({
@@ -92,23 +115,32 @@ export class AuthService {
   }
 
   /**
-   * Requête admin : récupère la liste des utilisateurs.
+   * Requête admin : récupère tous les utilisateurs.
    */
   getAllUsers(): Observable<any[]> {
-    return this.http.get<any[]>('http://localhost:8080/api/admin/utilisateurs', this.withAuth());
+    return this.http.get<any[]>(
+      'http://localhost:8080/api/admin/utilisateurs',
+      this.withAuth()
+    );
   }
 
   /**
-   * Requête admin : supprime un utilisateur par son ID.
+   * Requête admin : supprime un utilisateur par ID.
    */
   deleteUser(id: string): Observable<void> {
-    return this.http.delete<void>(`http://localhost:8080/api/admin/utilisateurs/${id}`, this.withAuth());
+    return this.http.delete<void>(
+      `http://localhost:8080/api/admin/utilisateurs/${id}`,
+      this.withAuth()
+    );
   }
 
   /**
    * Requête admin : récupère les statistiques générales.
    */
   getStats(): Observable<any> {
-    return this.http.get<any>('http://localhost:8080/api/admin/statistiques', this.withAuth());
+    return this.http.get<any>(
+      'http://localhost:8080/api/admin/statistiques',
+      this.withAuth()
+    );
   }
 }

@@ -1,34 +1,22 @@
-// src/app/core/guards/auth.guard.ts
-
-import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
+import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
-@Injectable({ providedIn: 'root' })
-export class AuthGuard implements CanActivate {
+export const AuthGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
 
-  constructor(private authService: AuthService, private router: Router) {}
+  const isLoggedIn = authService.isLoggedIn();
+  const requiredRole = route.data['role'];
+  const userRole = authService.getRole();
 
-  /**
-   * Vérifie si l'utilisateur peut accéder à la route.
-   * - Si non connecté : redirection vers login.
-   * - Si le rôle requis est défini et non respecté : redirection vers dashboard.
-   */
-  canActivate(route: ActivatedRouteSnapshot): boolean {
-    const isLoggedIn = this.authService.isLoggedIn();
-    const requiredRole = route.data['role']; // ex: 'ADMIN' ou 'USER'
-    const userRole = this.authService.getRole();
-
-    if (!isLoggedIn) {
-      this.router.navigate(['/login']);
-      return false;
-    }
-
-    if (requiredRole && userRole !== requiredRole) {
-      this.router.navigate(['/dashboard']);
-      return false;
-    }
-
-    return true;
+  if (!isLoggedIn) {
+    return router.parseUrl('/login');
   }
-}
+
+  if (requiredRole && userRole !== requiredRole) {
+    return router.parseUrl('/dashboard');
+  }
+
+  return true;
+};
