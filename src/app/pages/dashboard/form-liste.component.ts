@@ -36,9 +36,9 @@ import { Personne } from '../../models/personne.model';
 
       <select [(ngModel)]="nouvellePersonne.genre" name="genre" required>
         <option value="" disabled selected>Choisir un genre</option>
-        <option value="masculin">Masculin</option>
-        <option value="féminin">Féminin</option>
-        <option value="ne se prononce pas">Ne se prononce pas</option>
+        <option value="MASCULIN">Masculin</option>
+        <option value="FEMININ">Féminin</option>
+        <option value="NE_SE_PRONOCE_PAS">Ne se prononce pas</option>
       </select>
 
       <select [(ngModel)]="nouvellePersonne.aisanceFrancais" name="aisanceFrancais" required>
@@ -62,9 +62,9 @@ import { Personne } from '../../models/personne.model';
 
       <select [(ngModel)]="nouvellePersonne.profil" name="profil" required>
         <option value="" disabled selected>Profil</option>
-        <option value="timide">Timide</option>
-        <option value="réservé">Réservé</option>
-        <option value="à l’aise">À l’aise</option>
+        <option value="TIMIDE">Timide</option>
+        <option value="RESERVE">Réservé</option>
+        <option value="A_L_AISE">À l’aise</option>
       </select>
 
       <input
@@ -194,11 +194,11 @@ export class FormListeComponent {
 
   nouvellePersonne: Personne = {
     nom: '',
-    genre: 'masculin',
+    genre: 'MASCULIN',
     aisanceFrancais: 1,
     ancienDWWM: false,
     niveauTechnique: 1,
-    profil: 'timide',
+    profil: 'TIMIDE',
     age: 18
   };
 
@@ -212,11 +212,11 @@ export class FormListeComponent {
 
     this.nouvellePersonne = {
       nom: '',
-      genre: 'masculin',
+      genre: 'MASCULIN',
       aisanceFrancais: 1,
       ancienDWWM: false,
       niveauTechnique: 1,
-      profil: 'timide',
+      profil: 'TIMIDE',
       age: 18
     };
   }

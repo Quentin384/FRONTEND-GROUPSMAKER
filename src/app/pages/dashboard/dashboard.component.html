@@ -1,102 +1,61 @@
 <div class="dashboard">
-  <!-- Bouton admin (visible uniquement pour les ADMIN) -->
+  <!-- Bouton admin -->
   <button *ngIf="isAdmin()" (click)="redirigerVersAdmin()" class="btn-admin">
     🎛 Accéder à l’administration
   </button>
 
   <h1>Vos listes</h1>
 
+  <!-- Création de nouvelle liste (avec ajout de personnes à la volée avant envoi) -->
   <app-form-liste (nouvelleListe)="ajouterListe($event)"></app-form-liste>
 
+  <!-- Affichage de toutes les listes existantes -->
   <div *ngFor="let liste of listes" class="liste">
-    <h2>{{ liste.nom }} ({{ liste.personnes.length }} personnes, {{ liste.tirages }} tirages)</h2>
+    <h2>
+      {{ liste.nom }}
+      <span class="badge">{{ (liste.personnes || []).length }} personnes</span>
+      <span class="badge tirages">{{ liste.tirages }} tirages</span>
+    </h2>
 
-    <!-- Configuration des groupes -->
-    <div *ngIf="!estTirageValide(liste.nom)" class="config">
-      <label>
-        Nombre de groupes :
-        <input
-          type="number"
-          min="1"
-          [value]="nombreGroupes[liste.nom] || 1"
-          (input)="nombreGroupes[liste.nom] = $any($event.target).valueAsNumber"
-        />
-      </label>
-
-      <button (click)="initNomsGroupes(liste.nom)">Définir les noms</button>
-
-      <div *ngIf="nomsGroupes[liste.nom]?.length">
-        <div *ngFor="let _ of iter(nombreGroupes[liste.nom]); let i = index">
-          <label>
-            Nom groupe {{ i + 1 }} :
-            <input type="text" [(ngModel)]="nomsGroupes[liste.nom][i]" />
-          </label>
-        </div>
-      </div>
-
-      <fieldset>
-        <legend>Critères de mixité</legend>
-        <label>
-          <input type="checkbox" [(ngModel)]="criteresMixite[liste.nom].anciensDWWM" />
-          Mixer anciens DWWM
-        </label>
-        <label>
-          <input type="checkbox" [(ngModel)]="criteresMixite[liste.nom].mixAge" />
-          Mixer âges
-        </label>
-      </fieldset>
-
-      <button (click)="formerGroupes(liste.nom)">Former les groupes</button>
-    </div>
-
-    <!-- Liste des personnes -->
+    <!-- Liste des personnes associées à cette liste -->
     <ul>
-      <li *ngFor="let personne of liste.personnes">👤 {{ personne.nom }}</li>
+      <li *ngFor="let p of liste.personnes">
+        👤 <strong>{{ p.nom }}</strong>
+        | Genre : {{ p.genre }}
+        | 🇫🇷 Français : {{ p.aisanceFrancais }}/4
+        | 👵 Ancien DWWM : {{ p.ancienDWWM ? 'Oui' : 'Non' }}
+        | 🔧 Tech : {{ p.niveauTechnique }}/4
+        | Profil : {{ p.profil }}
+        | Âge : {{ p.age }}
+      </li>
     </ul>
 
-    <!-- Groupes formés (en cours ou validés) -->
-    <div *ngIf="(groupesFormes[liste.nom]?.length || estTirageValide(liste.nom))">
-      <h3>Groupes formés :</h3>
-      <div
-        *ngFor="let groupe of (
-          groupesFormes[liste.nom]?.length
-            ? groupesFormes[liste.nom]
-            : historiqueGroupes[liste.nom]?.length
-              ? historiqueGroupes[liste.nom][historiqueGroupes[liste.nom].length - 1]?.groupes
-              : []
-        )"
-      >
-        <strong>{{ groupe.nom }}</strong>
-        <ul>
-          <li *ngFor="let p of groupe.membres">{{ p.nom }}</li>
-        </ul>
-      </div>
-
-      <button *ngIf="!estTirageValide(liste.nom)" (click)="validerTirage(liste.nom)">
-        Valider le tirage
-      </button>
-      <p *ngIf="estTirageValide(liste.nom)" class="valide">
-        Tirage validé, plus aucune modification possible.
-      </p>
-    </div>
-
-    <!-- Historique des tirages précédents -->
-    <div *ngIf="historiqueGroupes[liste.nom] && historiqueGroupes[liste.nom].length > 1">
-      <h3>Historique des groupes formés :</h3>
-      <div *ngFor="let tirage of historiqueGroupes[liste.nom]?.slice(0, -1); let idx = index">
-        <p>
-          <em>
-            Tirage du {{ tirage.date | date: 'short' }} – Validé : {{ tirage.valide ? 'Oui' : 'Non' }}
-          </em>
-        </p>
-        <div *ngFor="let groupe of tirage.groupes">
-          <strong>{{ groupe.nom }}</strong>
-          <ul>
-            <li *ngFor="let p of groupe.membres">{{ p.nom }}</li>
-          </ul>
-        </div>
-        <hr />
-      </div>
-    </div>
+    <!-- Ajout d'une personne dans cette liste -->
+    <form (ngSubmit)="ajouterPersonneDansListe(liste.id)" class="form form-inline">
+      <input type="text" placeholder="Nom" [(ngModel)]="personneForm[liste.id].nom" name="nom-{{liste.id}}" required minlength="4" maxlength="49" />
+      <select [(ngModel)]="personneForm[liste.id].genre" name="genre-{{liste.id}}" required>
+        <option value="MASCULIN">Masculin</option>
+        <option value="FEMININ">Féminin</option>
+        <option value="NE_SE_PRONONCE_PAS">Ne se prononce pas</option>
+      </select>
+      <select [(ngModel)]="personneForm[liste.id].aisanceFrancais" name="aisanceFrancais-{{liste.id}}" required>
+        <option *ngFor="let n of [1,2,3,4]" [value]="n">{{ n }}</option>
+      </select>
+      <label>
+        <input type="checkbox" [(ngModel)]="personneForm[liste.id].ancienDWWM" name="ancienDWWM-{{liste.id}}" />
+        Ancien DWWM
+      </label>
+      <select [(ngModel)]="personneForm[liste.id].niveauTechnique" name="niveauTechnique-{{liste.id}}" required>
+        <option *ngFor="let n of [1,2,3,4]" [value]="n">{{ n }}</option>
+      </select>
+      <select [(ngModel)]="personneForm[liste.id].profil" name="profil-{{liste.id}}" required>
+        <option value="TIMIDE">Timide</option>
+        <option value="RESERVE">Réservé</option>
+        <option value="A_L_AISE">À l’aise</option>
+      </select>
+      <input type="number" placeholder="Âge" [(ngModel)]="personneForm[liste.id].age" name="age-{{liste.id}}" min="1" max="99" required />
+      <button type="submit">Ajouter à cette liste</button>
+    </form>
+    <!-- ... Ici tu peux rajouter la partie groupes/tirages/historique comme avant ... -->
   </div>
 </div>
