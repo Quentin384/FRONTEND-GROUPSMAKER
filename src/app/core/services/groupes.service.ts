@@ -1,21 +1,13 @@
 // src/app/core/services/groupes.service.ts
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable } from 'rxjs';
+
 import { Liste } from '../../models/liste.model';
 import { Personne } from '../../models/personne.model';
-
-export interface Groupe {
-  nom: string;
-  membres: Personne[];
-}
-
-export interface Tirage {
-  id?: number;
-  groupes: Groupe[];
-  date: string | Date;
-  valide: boolean;
-}
+import { Groupe } from '../../models/groupe.model';
+import { Tirage } from '../../models/tirage.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +17,7 @@ export class GroupesService {
 
   constructor(private http: HttpClient) {}
 
-  // ----------- REST API -----------
+  // ----- API REST -----
 
   getListes(): Observable<Liste[]> {
     return this.http.get<Liste[]>(`${this.api}/listes`);
@@ -33,6 +25,10 @@ export class GroupesService {
 
   ajouterListe(nom: string): Observable<Liste> {
     return this.http.post<Liste>(`${this.api}/listes`, { nom });
+  }
+
+  supprimerListe(idListe: number): Observable<void> {
+    return this.http.delete<void>(`${this.api}/listes/${idListe}`);
   }
 
   ajouterPersonneDansListe(idListe: number, personne: Personne): Observable<Personne> {
@@ -52,10 +48,12 @@ export class GroupesService {
   }
 
   validerTirage(idListe: number, tirageId: number): Observable<Tirage> {
-    return this.http.patch<Tirage>(`${this.api}/listes/${idListe}/tirages/${tirageId}`, { valide: true });
+    return this.http.patch<Tirage>(`${this.api}/listes/${idListe}/tirages/${tirageId}`, {
+      valide: true
+    });
   }
 
-  // ----------- LOGIQUE ALEATOIRE (FRONT) -----------
+  // ----- LOGIQUE DE GROUPEMENT -----
 
   formerGroupesAleatoires(
     personnes: Personne[],
@@ -63,19 +61,14 @@ export class GroupesService {
     nomsGroupes: string[],
     criteresMixite: string[]
   ): Groupe[] {
-    if (!personnes || personnes.length === 0) return [];
-    if (nombreGroupes <= 0 || nomsGroupes.length !== nombreGroupes) return [];
+    if (!personnes.length || nombreGroupes < 1 || nomsGroupes.length !== nombreGroupes) {
+      return [];
+    }
 
-    // --- Critères de répartition ---
-    const estAncienDWWM = (p: Personne) => p.ancienDWWM === true;
-    const getTrancheAge = (p: Personne) => {
-      if (!p.age) return 'inconnu';
-      if (p.age < 25) return 'jeune';
-      if (p.age < 40) return 'moyen';
-      return 'senior';
-    };
+    const estAncien = (p: Personne) => p.ancienDWWM;
+    const getTrancheAge = (p: Personne) =>
+      p.age < 25 ? 'jeune' : p.age < 40 ? 'moyen' : 'senior';
 
-    // --- Mélange de Fisher-Yates ---
     const melanger = (arr: Personne[]) => {
       for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -83,48 +76,39 @@ export class GroupesService {
       }
     };
 
-    // --- Création des groupes vides ---
     const groupes: Groupe[] = nomsGroupes.map(nom => ({ nom, membres: [] }));
+    let reste = [...personnes];
 
-    // --- Répartition ---
-    let personnesRestantes = [...personnes];
-
-    if (criteresMixite.length === 0) {
-      melanger(personnesRestantes);
-      personnesRestantes.forEach((p, i) => {
-        groupes[i % nombreGroupes].membres.push(p);
-      });
-    } else if (criteresMixite.includes('anciensDWWM')) {
-      const anciens = personnesRestantes.filter(estAncienDWWM);
-      const autres = personnesRestantes.filter(p => !estAncienDWWM(p));
-      melanger(anciens);
-      melanger(autres);
-      anciens.forEach((p, i) => {
-        groupes[i % nombreGroupes].membres.push(p);
-      });
-      autres.forEach((p, i) => {
-        groupes[i % nombreGroupes].membres.push(p);
-      });
-    } else if (criteresMixite.includes('mixAge')) {
-      const groupesAge: { [tranche: string]: Personne[] } = {};
-      personnesRestantes.forEach(p => {
-        const tranche = getTrancheAge(p);
-        if (!groupesAge[tranche]) groupesAge[tranche] = [];
-        groupesAge[tranche].push(p);
-      });
-      Object.values(groupesAge).forEach(arr => melanger(arr));
-      Object.values(groupesAge).forEach(arr => {
-        arr.forEach((p, i) => {
-          groupes[i % nombreGroupes].membres.push(p);
-        });
-      });
-    } else {
-      melanger(personnesRestantes);
-      personnesRestantes.forEach((p, i) => {
-        groupes[i % nombreGroupes].membres.push(p);
-      });
+    if (!criteresMixite.length) {
+      melanger(reste);
+      reste.forEach((p, i) => groupes[i % nombreGroupes].membres.push(p));
+      return groupes;
     }
 
+    if (criteresMixite.includes('anciensDWWM')) {
+      const anciens = reste.filter(estAncien);
+      const autres = reste.filter(p => !estAncien(p));
+      melanger(anciens);
+      melanger(autres);
+      [...anciens, ...autres].forEach((p, i) => groupes[i % nombreGroupes].membres.push(p));
+      return groupes;
+    }
+
+    if (criteresMixite.includes('mixAge')) {
+      const byTranche: Record<string, Personne[]> = {};
+      reste.forEach(p => {
+        const tranche = getTrancheAge(p);
+        (byTranche[tranche] ||= []).push(p);
+      });
+      Object.values(byTranche).forEach(arr => {
+        melanger(arr);
+        arr.forEach((p, i) => groupes[i % nombreGroupes].membres.push(p));
+      });
+      return groupes;
+    }
+
+    melanger(reste);
+    reste.forEach((p, i) => groupes[i % nombreGroupes].membres.push(p));
     return groupes;
   }
 }

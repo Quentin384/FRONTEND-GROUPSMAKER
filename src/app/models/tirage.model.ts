@@ -1,18 +1,10 @@
-export interface CritereMixite {
-  age?: boolean;
-  ancienDwwm?: boolean;
-  genre?: boolean;
-  profil?: boolean;
-  niveauTech?: boolean;
-  aisanceFr?: boolean;
-}
+// src/app/models/tirage.model.ts
 
-export class Tirage {
-  constructor(
-    public id: string,
-    public listeId: string,
-    public date: Date = new Date(),
-    public criteresMixite: CritereMixite = {},
-    public verrouille: boolean = false
-  ) {}
+import { Groupe } from './groupe.model';
+
+export interface Tirage {
+  id?: number; // ✅ Optionnel : utilisé dans les GET / PATCH, pas dans POST
+  groupes: Groupe[];
+  date: string | Date;
+  valide: boolean;
 }

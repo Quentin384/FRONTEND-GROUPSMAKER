@@ -6,6 +6,25 @@
   color: #222;
   background-color: #fff;
 
+  /* Admin button */
+  .btn-admin {
+    display: inline-block;
+    margin-bottom: 2rem;
+    padding: 0.5rem 1rem;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #1e7e34;
+    }
+  }
+
   h1 {
     font-size: 2rem;
     margin-bottom: 2rem;
@@ -16,35 +35,81 @@
   }
 
   .liste {
+    position: relative;
     border: 1px solid #ddd;
     padding: 1.5rem;
     margin-bottom: 2rem;
     border-radius: 8px;
     background: #f9f9f9;
 
-    h2 {
+    /* Header: title + delete button */
+    .liste-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 1rem;
-      font-size: 1.25rem;
-      color: #333;
+
+      h2 {
+        margin: 0;
+        font-size: 1.25rem;
+        color: #333;
+
+        .badge {
+          background-color: #007bff;
+          color: white;
+          border-radius: 12px;
+          padding: 0.2rem 0.6rem;
+          font-size: 0.9rem;
+          margin-left: 0.5rem;
+        }
+      }
+
+      .btn-supprimer {
+        background: #dc3545;
+        color: #fff;
+        border: none;
+        padding: 0.3rem 0.6rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background: #a71d2a;
+        }
+      }
     }
 
-    ul {
+    /* List of people */
+    .liste-personnes {
       list-style: none;
       padding-left: 1rem;
+      margin-bottom: 1rem;
 
       li {
         margin: 0.25rem 0;
       }
     }
 
+    /* Message when empty */
+    .vide {
+      font-style: italic;
+      color: #666;
+      margin-bottom: 1rem;
+    }
+
+    /* Add-person form styles live in its own component */
+
+    /* Configuration (number of groups + criteria) */
     .config {
       margin: 1rem 0;
 
       label {
         display: block;
         margin-bottom: 0.5rem;
+        font-size: 0.95rem;
 
-        input {
+        input[type='number'] {
           margin-left: 0.5rem;
           padding: 0.3rem 0.5rem;
           border-radius: 4px;
@@ -70,11 +135,17 @@
           margin-bottom: 0.5rem;
           font-size: 0.9rem;
           cursor: pointer;
+
+          input[type='checkbox'] {
+            margin-right: 0.5rem;
+          }
         }
       }
     }
 
-    button {
+    /* General buttons in this card */
+    > button {
+      display: inline-block;
       margin-top: 1rem;
       padding: 0.5rem 1rem;
       background-color: #007bff;
@@ -91,29 +162,60 @@
       }
     }
 
-    .valide {
-      color: green;
-      font-weight: bold;
-      margin-top: 1rem;
-    }
-  }
+    /* Generated groups section */
+    .groupes {
+      margin-top: 1.5rem;
+      background: #eef4fb;
+      padding: 1rem;
+      border-radius: 6px;
 
-    .btn-admin {
-    display: inline-block;
-    margin-bottom: 2rem;
-    padding: 0.5rem 1rem;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+      h3 {
+        margin-top: 0;
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
 
-    &:hover {
-      background-color: #1e7e34;
+      .groupe-card {
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+
+        input {
+          width: 100%;
+          padding: 0.4rem;
+          margin-bottom: 0.5rem;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+        }
+
+        ul {
+          list-style: none;
+          padding-left: 1rem;
+
+          li {
+            margin: 0.25rem 0;
+          }
+        }
+      }
+
+      .valide {
+        display: inline-block;
+        margin-top: 0.5rem;
+        padding: 0.5rem 1rem;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #218838;
+        }
+      }
     }
   }
 }
-
