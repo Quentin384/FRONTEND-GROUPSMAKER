@@ -1,3 +1,4 @@
+/* Dashboard component SCSS */
 .dashboard {
   padding: 2rem;
   max-width: 900px;
@@ -12,7 +13,7 @@
     margin-bottom: 2rem;
     padding: 0.5rem 1rem;
     background-color: #28a745;
-    color: white;
+    color: #fff;
     border: none;
     border-radius: 4px;
     font-weight: 600;
@@ -42,7 +43,6 @@
     border-radius: 8px;
     background: #f9f9f9;
 
-    /* Header: title + delete button */
     .liste-header {
       display: flex;
       justify-content: space-between;
@@ -56,7 +56,7 @@
 
         .badge {
           background-color: #007bff;
-          color: white;
+          color: #fff;
           border-radius: 12px;
           padding: 0.2rem 0.6rem;
           font-size: 0.9rem;
@@ -80,7 +80,6 @@
       }
     }
 
-    /* List of people */
     .liste-personnes {
       list-style: none;
       padding-left: 1rem;
@@ -91,16 +90,12 @@
       }
     }
 
-    /* Message when empty */
     .vide {
       font-style: italic;
       color: #666;
       margin-bottom: 1rem;
     }
 
-    /* Add-person form styles live in its own component */
-
-    /* Configuration (number of groups + criteria) */
     .config {
       margin: 1rem 0;
 
@@ -143,13 +138,12 @@
       }
     }
 
-    /* General buttons in this card */
     > button {
       display: inline-block;
       margin-top: 1rem;
       padding: 0.5rem 1rem;
       background-color: #007bff;
-      color: white;
+      color: #fff;
       border: none;
       border-radius: 4px;
       cursor: pointer;
@@ -162,7 +156,6 @@
       }
     }
 
-    /* Generated groups section */
     .groupes {
       margin-top: 1.5rem;
       background: #eef4fb;
@@ -205,7 +198,7 @@
         margin-top: 0.5rem;
         padding: 0.5rem 1rem;
         background-color: #28a745;
-        color: white;
+        color: #fff;
         border: none;
         border-radius: 4px;
         font-weight: 600;
@@ -214,6 +207,42 @@
 
         &:hover {
           background-color: #218838;
+        }
+      }
+    }
+
+    .groupes-valides {
+      margin-top: 1.5rem;
+      background: #e8f5e9;
+      padding: 1rem;
+      border-radius: 6px;
+
+      h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #155724;
+        margin-top: 0;
+      }
+
+      .groupe-card {
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+        background: #fff;
+        border: 1px solid #c3e6cb;
+        border-radius: 6px;
+
+        h4 {
+          margin: 0 0 0.5rem;
+          color: #155724;
+        }
+
+        ul {
+          list-style: none;
+          padding-left: 1rem;
+
+          li {
+            margin: 0.25rem 0;
+          }
         }
       }
     }

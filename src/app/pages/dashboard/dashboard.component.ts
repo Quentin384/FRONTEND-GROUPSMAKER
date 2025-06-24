@@ -1,16 +1,15 @@
-// src/app/pages/dashboard/dashboard.component.ts
-
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 
 import { GroupesService } from '../../core/services/groupes.service';
-import { Groupe } from '../../models/groupe.model';
-import { Tirage } from '../../models/tirage.model';
 import { AuthService } from '../../core/services/auth.service';
+
 import { Liste } from '../../models/liste.model';
 import { Personne } from '../../models/personne.model';
+import { Groupe } from '../../models/groupe.model';
+import { Tirage } from '../../models/tirage.model';
 
 import { FormCreerListeComponent } from './form-creer-liste.component';
 import { FormAjoutPersonneComponent } from './form-ajout-personne.component';
@@ -22,17 +21,17 @@ import { FormAjoutPersonneComponent } from './form-ajout-personne.component';
     CommonModule,
     FormsModule,
     FormCreerListeComponent,
-    FormAjoutPersonneComponent
+    FormAjoutPersonneComponent,
   ],
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
   listes: Liste[] = [];
-  groupesFormes: { [id: number]: Groupe[] } = {};
-  historiqueGroupes: { [id: number]: Tirage[] } = {};
-  nombreGroupes: { [id: number]: number } = {};
-  criteresMixite: { [id: number]: { anciensDWWM: boolean; mixAge: boolean } } = {};
+  groupesFormes: Record<number, Groupe[]> = {};
+  historiqueGroupes: Record<number, Tirage[]> = {};
+  nombreGroupes: Record<number, number> = {};
+  criteresMixite: Record<number, { anciensDWWM: boolean; mixAge: boolean }> = {};
 
   constructor(
     private groupesService: GroupesService,
@@ -54,16 +53,15 @@ export class DashboardComponent implements OnInit {
 
   private chargerListes(): void {
     this.groupesService.getListes().subscribe({
-      next: listes => {
+      next: (listes) => {
         this.listes = listes;
-        listes.forEach(l => {
-          this.nombreGroupes[l.id] = this.nombreGroupes[l.id] ?? 1;
-          this.criteresMixite[l.id] =
-            this.criteresMixite[l.id] ?? { anciensDWWM: false, mixAge: false };
+        listes.forEach((l) => {
+          this.nombreGroupes[l.id] ??= 1;
+          this.criteresMixite[l.id] ??= { anciensDWWM: false, mixAge: false };
           this.chargerHistorique(l.id);
         });
       },
-      error: err => console.error('Erreur chargement listes', err)
+      error: (err) => console.error('Erreur chargement listes', err),
     });
   }
 
@@ -81,12 +79,12 @@ export class DashboardComponent implements OnInit {
     if (!confirm('Supprimer cette liste et ses personnes ?')) return;
     this.groupesService.supprimerListe(id).subscribe({
       next: () => this.chargerListes(),
-      error: err => console.error('Erreur suppression liste', err)
+      error: (err) => console.error('Erreur suppression liste', err),
     });
   }
 
   formerGroupes(id: number): void {
-    const liste = this.listes.find(l => l.id === id);
+    const liste = this.listes.find((l) => l.id === id);
     if (!liste) return;
 
     const nb = this.nombreGroupes[id];
@@ -103,51 +101,49 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  /** POST: enregistre un nouveau tirage */
-  /** POST: enregistre un nouveau tirage */
-enregistrerTirage(id: number): void {
-  const groupes = this.groupesFormes[id]; // ✅ On définit groupes d'abord
-  console.log('[DEBUG] groupes =', groupes); // ✅ Puis on peut l'afficher
-
-  if (!groupes?.length) {
-    console.warn('[DEBUG] Pas de groupes à enregistrer pour liste', id);
-    return;
-  }
-
-  const tirage: Tirage = { groupes, date: new Date(), valide: false };
-  this.groupesService.enregistrerTirage(id, tirage).subscribe({
-    next: res => {
-      console.log('[DEBUG] Tirage enregistré', res);
-      delete this.groupesFormes[id];
-      this.chargerHistorique(id);
-    },
-    error: err =>
-      console.error('[ERROR] Impossible d’enregistrer le tirage', err)
-  });
-}
-
-  /** PATCH: valide le dernier tirage existant */
-  validerTirage(id: number): void {
-    console.log('[DEBUG] validerTirage pour liste', id);
-    const hist = this.historiqueGroupes[id] || [];
-    const dernier = hist[hist.length - 1];
-    if (!dernier?.id) {
-      console.warn('[DEBUG] Aucun tirage à valider pour liste', id);
+  enregistrerTirage(id: number): void {
+    const groupes = this.groupesFormes[id];
+    if (!groupes?.length) {
+      console.warn('Aucun groupe à enregistrer pour liste', id);
       return;
     }
-    this.groupesService.validerTirage(id, dernier.id).subscribe({
-      next: upd => {
-        console.log('[DEBUG] Tirage validé', upd);
+
+    const tirage: Tirage = { groupes, date: new Date(), valide: true };
+    this.groupesService.enregistrerTirage(id, tirage).subscribe({
+      next: () => {
+        delete this.groupesFormes[id];
         this.chargerHistorique(id);
       },
-      error: err =>
-        console.error('[ERROR] Impossible de valider le tirage', err)
+      error: (err) => console.error('Impossible d’enregistrer le tirage', err),
+    });
+  }
+
+  validerTirage(id: number): void {
+    const hist = this.historiqueGroupes[id] || [];
+    const dernier = hist.at(-1);
+    if (!dernier?.id) {
+      console.warn('Aucun tirage à valider pour liste', id);
+      return;
+    }
+
+    this.groupesService.validerTirage(id, dernier.id).subscribe({
+      next: () => this.chargerHistorique(id),
+      error: (err) => console.error('Impossible de valider le tirage', err),
     });
   }
 
   private chargerHistorique(id: number): void {
     this.groupesService
       .getHistoriqueGroupes(id)
-      .subscribe(hist => (this.historiqueGroupes[id] = hist));
+      .subscribe((hist) => (this.historiqueGroupes[id] = hist));
+  }
+
+  /**
+   * Retourne les groupes du tirage validé le plus récent pour cette liste.
+   */
+  getGroupesValides(id: number): Groupe[] {
+    const hist = this.historiqueGroupes[id] || [];
+    const valide = hist.find((t) => t.valide);
+    return valide ? valide.groupes : [];
   }
 }

@@ -117,5 +117,20 @@
         ✅ Valider le tirage
       </button>
     </div>
+
+    <!-- Groupes validés -->
+    <div *ngIf="getGroupesValides(liste.id)?.length" class="groupes-valides">
+      <h3>Groupes validés</h3>
+      <div
+        *ngFor="let grp of getGroupesValides(liste.id)"
+        class="groupe-card"
+      >
+        <h4>{{ grp.nom }}</h4>
+        <ul>
+          <li *ngFor="let p of grp.membres">{{ p.nom }}</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 </div>
